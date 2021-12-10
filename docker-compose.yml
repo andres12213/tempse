@@ -1,0 +1,35 @@
+version: '3.6'
+services: 
+  mysqldb:
+      image: mysql:5.7.22
+      environment:
+          MYSQL_PASSWORD: root
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: datosVarios
+      networks:
+            - sensores-service
+      restart: always
+      volumes:
+        - ./data:/var/lib/mysql
+  rabbitmq:
+        image: rabbitmq:3-management
+        ports:
+            - "15672:15672"
+        networks:
+            - sensores-service
+  service:
+        image: elbatu/sensores:latest
+        restart: on-failure
+        ports:
+            - "8081:8081"
+        environment:
+            cola: uno
+        networks:
+            - sensores-service
+        depends_on:
+          mysqldb:
+            condition: service_started
+          rabbitmq:
+            condition: service_started
+networks:
+  sensores-service:
