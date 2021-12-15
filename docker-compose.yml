@@ -13,8 +13,11 @@ services:
         - ./data:/var/lib/mysql
   rabbitmq:
         image: rabbitmq:3-management
+        command: "/bin/bash -c \"rabbitmq-plugins enable rabbitmq_mqtt; rabbitmq-server\"
         ports:
             - "15672:15672"
+            - "5672:5672"
+            - "1883:1883"
         networks:
             - sensores-service
   service:
@@ -26,10 +29,7 @@ services:
             cola: uno
         networks:
             - sensores-service
-        depends_on:
-          mysqldb:
-            condition: service_started
-          rabbitmq:
-            condition: service_started
+        
+          
 networks:
   sensores-service:
