@@ -28,8 +28,6 @@ services:
         environment:
             cola: uno
         networks:
-            - sensores-service
-        
-          
+            - sensores-service     
 networks:
   sensores-service:
