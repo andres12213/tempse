@@ -13,7 +13,7 @@ services:
         - ./data:/var/lib/mysql
   rabbitmq:
         image: rabbitmq:3-management
-        command: "/bin/bash -c \"rabbitmq-plugins enable rabbitmq_mqtt; rabbitmq-server\"
+        command: "/bin/bash -c \"rabbitmq-plugins enable rabbitmq_mqtt; rabbitmq-server\""
         ports:
             - "15672:15672"
             - "5672:5672"
